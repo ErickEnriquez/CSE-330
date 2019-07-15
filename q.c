@@ -5,7 +5,7 @@
 struct Node* NewItem();
 struct Queue* InitQueue(struct Queue*);
 void AddQueue(struct Queue* , struct Node*);
-struct Queue* DelQueue(struct Node*);
+struct Node* DelQueue(struct Queue*);
 void RotateQ(struct Node*);
 
 int main(){
@@ -29,6 +29,16 @@ struct Queue* InitQueue(struct Queue*  head){
 void AddQueue(struct Queue* head , struct Node* item){
     
 }
+
+struct Node* DelQueue(struct Queue* head){
+    if(head == NULL){
+        return NULL;
+    }
+        struct Node* temp = head->head;
+        head = head->;
+        return temp;
+    
+)
 
 
 
