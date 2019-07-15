@@ -1,30 +1,31 @@
 #ifndef q_h
 #define q_h
-
 #include <stdio.h>
 #include <stdlib.h>
+#include "tcb.h"
 
-struct Node{
-    struct Node* previous;
-    struct Node* next;
-    int data;
-};
 
 
 struct Queue{
-    struct Node* head;
-
+    struct TCB_t*  head;
 };
 
-//Creates a new Node pointer and initializes the variables
-struct Node* NewItem(){
-    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
-    temp->data = 0; 
+//-----------
+//--NEW ITEM
+//-----------
+
+//Creates a new TCB_t pointer and initializes the variables
+struct TCB_t* NewItem(){
+    struct TCB_t* temp = (struct TCB_t*)malloc(sizeof(struct TCB_t));
     temp->next = NULL;
-    temp->previous = NULL;
+    temp->prev = NULL;
     return temp;
 
 }
+ 
+//-----------
+// INIT QUEUE
+//------------
 
 //creates an empty queue pointed to by the head variable
 void InitQueue(struct Queue* head){
@@ -32,28 +33,36 @@ void InitQueue(struct Queue* head){
     return;
 }
 
-void AddItem(struct Queue* head, struct Node* item){
+//----------
+// ADD ITEM
+//----------
+
+void AddItem(struct Queue* head, struct TCB_t* item){
     if(head->head == NULL){//if queue is empty then add the item at the head
         head->head = item;
         return;
     }
     //if the head is not null
     else if(head->head != NULL){
-        struct Node* temp  = head->head;
+        struct TCB_t* temp  = head->head;
         while(temp->next != NULL){//move until we get to last element 
             temp = temp->next;
         }
         temp->next = item;//set item at end of list
-        item->previous = temp;//make item point to the previous tail
+        item->prev = temp;//make item point to the previous tail
         return;
     }
 }
 
-struct Node* DelQueue(struct Queue* head){
+//-----------
+// DEL QUEUE
+//-----------
+
+struct TCB_t* DelQueue(struct Queue* head){
     if(head->head == NULL)
         return NULL;
     else{
-        struct Node* temp = head->head;
+        struct TCB_t* temp = head->head;
         head->head = head->head->next;//unlink previous head from the queue
         return temp;//return unlinked element
     }
@@ -65,23 +74,20 @@ void RotateQueue(struct Queue* head){
         return ;
     }
     else{
-        struct Node* item = head->head;//move the head to the back of the queue
+        struct TCB_t* item = head->head;//move the head to the back of the queue
         head->head = head->head->next;
-        struct Node* temp = head->head;
+        struct TCB_t* temp = head->head;
         item->next = NULL;
-        item->previous = NULL;
+        item->prev = NULL;
         while(temp->next != NULL){
             temp = temp->next;
         }
         temp->next = item;
-        item->previous = temp;
+        item->prev = temp;
         return;
     }
     
 }
-
-
-
 
 
 

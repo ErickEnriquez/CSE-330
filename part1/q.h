@@ -1,31 +1,37 @@
 #ifndef q_h
 #define q_h
+
 #include <stdio.h>
 #include <stdlib.h>
-#include "tcb.h"
 
+struct Node{
+    struct Node* previous;
+    struct Node* next;
+    int data;
+};
 
 
 struct Queue{
-    struct TCB_t*  head;
+    struct Node* head;
 
 };
 
-//Creates a new TCB_t pointer and initializes the variables
+//Creates a new Node pointer and initializes the variables
 struct Node* NewItem(){
-    struct TCB_t* temp = (struct TCB_t*)malloc(sizeof(struct TCB_t));
+    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+    temp->data = 0; 
     temp->next = NULL;
-    temp->prev = NULL;
+    temp->previous = NULL;
     return temp;
 
 }
- 
+
 //creates an empty queue pointed to by the head variable
 void InitQueue(struct Queue* head){
     head->head = NULL;//set the head to be null initially
     return;
 }
-/*
+
 void AddItem(struct Queue* head, struct Node* item){
     if(head->head == NULL){//if queue is empty then add the item at the head
         head->head = item;
@@ -77,6 +83,6 @@ void RotateQueue(struct Queue* head){
 
 
 
-*/
+
 
 #endif
