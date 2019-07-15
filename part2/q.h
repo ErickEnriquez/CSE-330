@@ -2,6 +2,7 @@
 #define q_h
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "tcb.h"
 
 
@@ -68,13 +69,17 @@ struct TCB_t* DelQueue(struct Queue* head){
     }
 }
 
+//------------
+// ROTATE QUEUE
+//-------------
+
 //this function moves the head pointer to the next element in the queue and places the previous head at the end of the queue
 void RotateQueue(struct Queue* head){
     if(head->head == NULL){
         return ;
     }
     else{
-        struct TCB_t* item = head->head;//move the head to the back of the queue
+        struct TCB_t* item = head->head;
         head->head = head->head->next;
         struct TCB_t* temp = head->head;
         item->next = NULL;
