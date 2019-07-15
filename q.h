@@ -33,7 +33,7 @@ void InitQueue(struct Queue* head){
 }
 
 void AddItem(struct Queue* head, struct Node* item){
-    if(head == NULL){//if queue is empty then add the item at the head
+    if(head->head == NULL){//if queue is empty then add the item at the head
         head->head = item;
         return;
     }
@@ -43,11 +43,41 @@ void AddItem(struct Queue* head, struct Node* item){
         while(temp->next != NULL){//move until we get to last element 
             temp = temp->next;
         }
+        temp->next = item;//set item at end of list
+        item->previous = temp;//make item point to the previous tail
+        return;
+    }
+}
+
+struct Node* DelQueue(struct Queue* head){
+    if(head->head == NULL)
+        return NULL;
+    else{
+        struct Node* temp = head->head;
+        head->head = head->head->next;//unlink previous head from the queue
+        return temp;//return unlinked element
+    }
+}
+
+//this function moves the head pointer to the next element in the queue and places the previous head at the end of the queue
+void RotateQueue(struct Queue* head){
+    if(head->head == NULL){
+        return ;
+    }
+    else{
+        struct Node* item = head->head;//move the head to the back of the queue
+        head->head = head->head->next;
+        struct Node* temp = head->head;
+        item->next = NULL;
+        item->previous = NULL;
+        while(temp->next != NULL){
+            temp = temp->next;
+        }
         temp->next = item;
         item->previous = temp;
         return;
-
     }
+    
 }
 
 
