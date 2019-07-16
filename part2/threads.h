@@ -1,23 +1,21 @@
 #include "q.h"
 #include <stdio.h>
-#define STACK_SIZE 8192
+
 
 /*global queue */
 struct Queue* runQ;
 
 void start_thread(void (*function)(void)){
-	void * stack = malloc(STACK_SIZE);
+	void * stack = malloc(8192);
 	TCB_t * tcb = (TCB_t *) malloc(sizeof(TCB_t));
-	init_TCB(tcb, function, stack, STACK_SIZE);
-	
-	/* Add the TCB to the thread Q */
+	init_TCB(tcb, function, stack, 8192);
 	AddItem(runQ, tcb);
 
 }
 
 
 
-void run(){
+void run(){//run the context
 	ucontext_t parent;
 	getcontext(&parent);
 	swapcontext(&parent, &(runQ->head->context));
@@ -27,11 +25,7 @@ void run(){
 
 void yield(){
 	ucontext_t *current, *next;
-	/* save the current context in the context struct
-		of the currently executing thread
-		(ie. the thread at the front of the runQ when yield is called == the tail after rotating)
-		and activate the context of the next thread
-		(ie. the thread at the front of th runQ after rotating) */
+	/* save the current context in the context stuct and rotate the queue to allow the next thread to run */
 	current = &runQ->head->context;
 	RotateQueue(runQ);
 

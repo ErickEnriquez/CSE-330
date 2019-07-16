@@ -10,6 +10,7 @@ void function3();
 
 int main(int argc , char** argv){
 
+    Global_Counter = 0;
     runQ = (struct Queue*)malloc(sizeof(struct Queue));//allocate the head pointer
     InitQueue(runQ);//initilize the runQ pointer to NULL
     start_thread(function1);
@@ -20,25 +21,41 @@ int main(int argc , char** argv){
 
 }
 
+//-----------------
+// INFINITE COUNTER
+//-----------------
 void function1(){
+    int localCounter = 1;
     while(1){
-        printf("function1\n");
+        
+        printf("Global Counter %d",Global_Counter);
+        printf("\nLocal Counter %d\n",localCounter);
+        localCounter++;
+        Global_Counter++;
         sleep(1);
         yield();
     }
 }
 
+//-----------------
+// INFINITE TEXT
+//-----------------
 void function2(){
     while(1){
-        printf("function2\n");
+        printf("time for thread 2\n");
         sleep(1);
         yield();
     }
 }
 
+//-------------- 
+// Reset Global Counter
+//-------------
 void function3(){
     while (1){
-        printf("function3\n");
+        printf("Reset Global Counter to  %d",Global_Counter);
+        Global_Counter--;
+        printf("\n");
         sleep(1);
         yield();
     }
