@@ -1,6 +1,5 @@
+//name : Erick Enriquez
 #include "threads.h"
-
-
 
 int Global_Counter;
 
@@ -32,7 +31,7 @@ void function1(){
         printf("\nLocal Counter %d\n",localCounter);
         localCounter++;
         Global_Counter++;
-        sleep(1);
+        sleep(1);//sleep so that you can see it in action and not have it going crazy fast
         yield();
     }
 }
@@ -53,9 +52,8 @@ void function2(){
 //-------------
 void function3(){
     while (1){
-        printf("Reset Global Counter to  %d",Global_Counter);
+        printf("Reset Global Counter to  %d \n",Global_Counter);
         Global_Counter--;
-        printf("\n");
         sleep(1);
         yield();
     }

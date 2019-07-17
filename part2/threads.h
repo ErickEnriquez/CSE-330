@@ -1,3 +1,4 @@
+//name : Erick Enriquez
 #include "q.h"
 #include <stdio.h>
 
@@ -7,9 +8,9 @@ struct Queue* runQ;
 
 void start_thread(void (*function)(void)){
 	void * stack = malloc(8192);
-	TCB_t * tcb = (TCB_t *) malloc(sizeof(TCB_t));
-	init_TCB(tcb, function, stack, 8192);
-	AddItem(runQ, tcb);
+	TCB_t * temp = (TCB_t *) malloc(sizeof(TCB_t));
+	init_TCB(temp, function, stack, 8192);
+	AddItem(runQ, temp);
 
 }
 
